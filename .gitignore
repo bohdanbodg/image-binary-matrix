@@ -1,0 +1,7 @@
+.DS_Store
+**/.DS_Store
+build/
+CMakeUserPresets.json
+scripts/__pycache__/
+libs/
+.vscode/
