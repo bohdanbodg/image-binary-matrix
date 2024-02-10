@@ -25,6 +25,8 @@ class ImageBinaryMatrix(ConanFile):
         self.custom_copy_lib_includes("imgui", ["res", "bindings"], "*opengl3*", ["bindings"])
         self.custom_copy_lib_includes("imgui", ["res", "bindings"], "*glfw*", ["bindings"])
         self.custom_copy_lib_includes("opencv", ["include", "opencv4"])
+        if not os.path.isdir(os.path.join(self.source_folder, "libs", "opencv")):
+            self.custom_copy_lib_includes("opencv", ["include"])
 
         copy(
             self,

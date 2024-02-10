@@ -37,6 +37,8 @@ python3 ./scripts/build.py
 
 `make run` or `python ./scripts/run.py` or `python3 ./scripts/run.py`
 
+> P.S. Tested on MacOS and Windows, works perfect
+
 ## Technologies
 
 - C++17
