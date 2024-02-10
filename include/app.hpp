@@ -60,7 +60,7 @@ protected:
     std::string buildImageTitle(const std::string &addition = "") const;
     void renderImageFromCV(const cv::Mat &img) const;
 
-    void createOutputDirectory() const;
+    void createDirectory(const std::filesystem::path &path) const;
     std::string buildOutputImageFilename() const;
 
     void loadImage(const std::string &filename);

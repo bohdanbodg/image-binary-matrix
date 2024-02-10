@@ -4,7 +4,7 @@ from conan import ConanFile
 from conan.tools.cmake import cmake_layout
 from conan.tools.files import copy
 
-from scripts.consts import build_folder
+from scripts.consts import build_folder, is_windows
 
 class ImageBinaryMatrix(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
@@ -32,7 +32,7 @@ class ImageBinaryMatrix(ConanFile):
             self,
             "*",
             os.path.join(self.source_folder, "res"),
-            os.path.join(self.source_folder, build_folder, "bin", "input")
+            os.path.join(self.source_folder, build_folder, "bin", "Release" if is_windows else "", "input")
         )
 
     def custom_copy_lib_includes(self, lib, fromPath, pattern = "*", toPath = []):

@@ -53,6 +53,8 @@ bool IBMApplication::init() {
         return false;
     }
 
+    this->createDirectory(this->path.input);
+
     // Seek first image in the input folder
     for (const auto &entry : fs::recursive_directory_iterator(this->path.input)) {
         const auto &entryPath = entry.path();
@@ -181,7 +183,7 @@ void IBMApplication::drawImageTools(bool reset) {
     ImGui::NewLine();
 
     if (ImGui::Button("Save Binary Matrix to File")) {
-        this->createOutputDirectory();
+        this->createDirectory(this->path.output);
 
         savedFilenameMatrix = this->buildOutputImageFilename() + ".txt";
         std::ofstream fileOutput((this->path.output / savedFilenameMatrix).string());
@@ -211,7 +213,7 @@ void IBMApplication::drawImageTools(bool reset) {
     ImGui::NewLine();
 
     if (ImGui::Button("Save Mask to File")) {
-        this->createOutputDirectory();
+        this->createDirectory(this->path.output);
 
         savedFilename = this->buildOutputImageFilename();
         saved = cv::imwrite((this->path.output / savedFilename).string(), *this->mask);
@@ -273,10 +275,9 @@ void IBMApplication::renderImageFromCV(const cv::Mat &img) const {
     ImGui::Image((void *)(intptr_t)(texture), ImVec2(img.cols, img.rows));
 }
 
-void IBMApplication::createOutputDirectory() const {
-    const auto &output = this->path.output;
-    if (!fs::is_directory(output) || !fs::exists(output)) {
-        fs::create_directory(output);
+void IBMApplication::createDirectory(const std::filesystem::path &path) const {
+    if (!fs::is_directory(path) || !fs::exists(path)) {
+        fs::create_directory(path);
     }
 }
 
