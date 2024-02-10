@@ -19,8 +19,8 @@ class ImageBinaryMatrix(ConanFile):
         self.requires("opencv/4.8.1")
 
     def generate(self):
-        self.custom_copy_lib_includes("glew", ["include", "GL"])
-        self.custom_copy_lib_includes("glfw", ["include", "GLFW"])
+        self.custom_copy_lib_includes("glew", ["include"])
+        self.custom_copy_lib_includes("glfw", ["include"])
         self.custom_copy_lib_includes("imgui", ["include"])
         self.custom_copy_lib_includes("imgui", ["res", "bindings"], "*opengl3*", ["bindings"])
         self.custom_copy_lib_includes("imgui", ["res", "bindings"], "*glfw*", ["bindings"])
@@ -30,7 +30,7 @@ class ImageBinaryMatrix(ConanFile):
             self,
             "*",
             os.path.join(self.source_folder, "res"),
-            os.path.join(self.source_folder, build_folder, "bin", "res")
+            os.path.join(self.source_folder, build_folder, "bin", "input")
         )
 
     def custom_copy_lib_includes(self, lib, fromPath, pattern = "*", toPath = []):

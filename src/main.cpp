@@ -1,32 +1,22 @@
-#include "utils.hpp"
+#include "app.hpp"
 
-using namespace std;
+namespace fs = std::filesystem;
 
-void opencvExample() {
-    auto image = Image("res/img.png", true);
-    auto colorRange = ColorRange(
-        cv::Scalar(37, 42, 0),
-        cv::Scalar(84, 255, 255)
-    );
-
-    bool hasColor = false;
-    auto mask = image.getMaskByColorRange(colorRange, &hasColor);
-    auto res = image.getImageByMask(mask);
-
-    if (hasColor) {
-        cout << "Color detected!" << endl;
+static bool appStart(int argc, char const *argv[]) {
+    if (argc == 0) {
+        return false;
     }
 
-    cv::imshow("Image", image.cv);
-    cv::imshow("Res", res);
-    cv::imshow("Mask", mask);
-    
-    cv::waitKey();
-    cv::destroyAllWindows();
+    auto app = new IBMApplication(argv[0]);
+    if (app->init()) {
+        app->run();
+    }
+
+    delete app;
+
+    return true;
 }
 
-int main() {
-    opencvExample();
-
-    return 0;
+int main(int argc, char const *argv[]) {
+    return (int)(!appStart(argc, argv));
 }

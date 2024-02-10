@@ -1,5 +1,7 @@
 # Image Binary Matrix
 
+A small application to fetch an image mask based on a specified color range and generate a binary matrix corresponding to the mask.
+
 ```shell
 make build
 ```
