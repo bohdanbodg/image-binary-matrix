@@ -27,7 +27,7 @@ struct Image
     // Validate image
     void validate() const;
 
-    // Convert to HSV
+    // Convert image colors to HSV
     cv::Mat getHSV() const;
 
     // Threshold the HSV image - any specified color in range will show up as white
@@ -35,6 +35,9 @@ struct Image
 
     // Apply mask to image
     cv::Mat getImageByMask(const cv::Mat &mask) const;
+
+    // Convert mask colors to BGR
+    cv::Mat getMaskBGR(const cv::Mat &mask) const;
 
     // Check if image is currently loaded
     bool isLoaded() const;

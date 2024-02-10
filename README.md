@@ -18,3 +18,13 @@ make run
 - GLFW
 - ImGui
 - OpenCV
+
+## Screenshots
+
+### Application GUI
+
+![Application GUI](./img/app_gui.png)
+
+### Binary Matrix Output
+
+![Binary Matrix Output](./img/bm_output.png)

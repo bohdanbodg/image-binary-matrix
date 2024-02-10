@@ -150,7 +150,9 @@ void IBMApplication::drawImageTools(bool reset) {
 
 
     if (ImGui::Button("Process Mask")) {
-        pmask = this->image->getMaskByColorRange(this->inputData.hsvToRange(), &hasColor);
+        pmask = this->image->getMaskBGR(
+            this->image->getMaskByColorRange(this->inputData.hsvToRange(), &hasColor)
+        );
 
         this->mask = hasColor ? &pmask : nullptr;
     }
@@ -235,22 +237,7 @@ void IBMApplication::drawImagePreview() {
 void IBMApplication::drawMaskPreview() {
     ImGui::Begin(this->buildImageTitle("mask").c_str(), &this->inputData.maskPreviewOpened);
 
-    // TODO: Fix mask preview rendering
-    // This is optional feature, so not in priority yet
-    ImGui::TextDisabled("TODO: Fix mask preview rendering");
-    // this->renderImageFromCV(*this->mask);
-
-    auto img = *this->mask;
-
-    GLuint texture;
-
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.cols, img.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, img.data);
-    ImGui::Image((void *)(intptr_t)(texture), ImVec2(img.cols, img.rows));
+    this->renderImageFromCV(*this->mask);
 
     ImGui::End();
 }

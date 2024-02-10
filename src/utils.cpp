@@ -58,6 +58,13 @@ cv::Mat Image::getImageByMask(const cv::Mat &mask) const {
     return res;
 }
 
+cv::Mat Image::getMaskBGR(const cv::Mat &mask) const {
+    cv::Mat bgr;
+    cv::cvtColor(mask, bgr, cv::COLOR_GRAY2BGR);
+
+    return bgr;
+}
+
 bool Image::isLoaded() const {
     return loaded;
 }
