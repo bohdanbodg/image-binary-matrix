@@ -59,7 +59,7 @@ bool IBMApplication::init() {
         const auto &ext = entryPath.extension().string();
 
         if (ext == ".png" || ext == ".jpg" || ext == ".jpeg") {
-            strcpy(this->inputData.filename, entryPath.filename().c_str());
+            strcpy(this->inputData.filename, entryPath.filename().string().c_str());
 
             break;
         }
@@ -255,6 +255,12 @@ std::string IBMApplication::buildImageTitle(const std::string &addition) const {
     return result;
 }
 
+#ifdef _WIN32
+#define _GL_BGR_PLATFORM GL_BGR_EXT
+#else
+#define _GL_BGR_PLATFORM GL_BGR
+#endif
+
 void IBMApplication::renderImageFromCV(const cv::Mat &img) const {
     GLuint texture;
 
@@ -263,7 +269,7 @@ void IBMApplication::renderImageFromCV(const cv::Mat &img) const {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.cols, img.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, img.data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.cols, img.rows, 0, _GL_BGR_PLATFORM, GL_UNSIGNED_BYTE, img.data);
     ImGui::Image((void *)(intptr_t)(texture), ImVec2(img.cols, img.rows));
 }
 

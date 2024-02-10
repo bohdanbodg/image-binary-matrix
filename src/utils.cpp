@@ -16,7 +16,7 @@ void Image::load() {
         return;
     }
 
-    this->cv = cv::imread(this->path);
+    this->cv = cv::imread(this->path.string());
     this->loaded = true;
 }
 
