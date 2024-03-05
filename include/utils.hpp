@@ -6,6 +6,7 @@
 #include "std.hpp"
 
 #include <opencv2/opencv.hpp>
+#include <GL/glew.h>
 
 struct ColorRange
 {
@@ -14,36 +15,88 @@ struct ColorRange
     ColorRange(const cv::Scalar &from, const cv::Scalar &to);
 };
 
+struct Texture2D
+{
+    GLuint *glTexture;
+
+    Texture2D();
+
+    void reset();
+    void render(const cv::Mat &mat);
+    void bind();
+};
+
 struct Image
 {
-    std::filesystem::path filename, path;
-    cv::Mat cv;
+    std::filesystem::path filename, ext, path;
+    cv::Mat cv, mask;
+    Texture2D texture, maskTexture;
 
     Image(const std::filesystem::path &path, bool load = false);
 
-    // Load image
     void load();
-
-    // Validate image
     void validate() const;
 
-    // Convert image colors to HSV
-    cv::Mat getHSV() const;
+    void processMaskByColorRange(const ColorRange &colorRange);
+    bool saveMask(const std::filesystem::path &path);
 
-    // Threshold the HSV image - any specified color in range will show up as white
-    cv::Mat getMaskByColorRange(const ColorRange &colorRange, bool *hasColor = nullptr) const;
+    int width() const;
+    int height() const;
 
-    // Apply mask to image
-    cv::Mat getImageByMask(const cv::Mat &mask) const;
-
-    // Convert mask colors to BGR
-    cv::Mat getMaskBGR(const cv::Mat &mask) const;
-
-    // Check if image is currently loaded
     bool isLoaded() const;
+    bool isMaskProcessed() const;
 
-private:
-    bool loaded;
+  private:
+    bool loaded, maskProcessed;
+};
+
+struct Exception
+{
+    std::string message;
+
+    Exception(const std::string &message);
+};
+
+struct BinaryMatrix
+{
+    using Type = bool;
+    static const Type True = (Type)(1);
+    static const Type False = (Type)(0);
+
+    size_t rows, cols;
+    std::vector<std::vector<Type>> data;
+
+    BinaryMatrix();
+    BinaryMatrix(size_t rows, size_t cols);
+    BinaryMatrix(
+        size_t rows,
+        size_t cols,
+        const std::vector<std::vector<Type>> &data
+    );
+
+    bool isEmpty() const;
+    bool isValid() const;
+    bool hasTrue() const;
+    void clear();
+    Type at(size_t row, size_t col) const;
+    void set(size_t row, size_t col, Type value);
+    void reset(size_t rows = 0, size_t cols = 0);
+    bool isTrue(size_t row, size_t col) const;
+    bool isFalse(size_t row, size_t col) const;
+
+    // Return vector of rows,
+    // each element is a sum of all the row elements
+    std::vector<unsigned int> sumRows() const;
+
+    // Return vector of columns,
+    // each element is a sum of all the column
+    std::vector<unsigned int> sumCols() const;
+
+    // Flip a matrix over its diagonal
+    BinaryMatrix transpose() const;
+
+  private:
+    using self = BinaryMatrix;
 };
 
 #endif

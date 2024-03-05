@@ -7,43 +7,48 @@
 
 #include "imgui.h"
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) \
+    && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
 class IApplication
 {
-public:
+  public:
     virtual bool init() = 0;
     virtual void run() = 0;
+    virtual void terminate() = 0;
     virtual void draw() = 0;
     virtual void dispose() = 0;
 };
 
-class Application : public IApplication
+class Application: public IApplication
 {
-private:
+  private:
     const char *glslVersion;
     bool inited;
 
-public:
+  public:
     GLFWwindow *window;
     const char *windowName;
+    int windowWidth, windowHeight;
     ImVec4 clearColor;
 
-public:
+  public:
     Application(const char *windowName);
 
     virtual ~Application();
 
     virtual bool init();
     virtual void run();
+    virtual void terminate();
     virtual void draw();
     virtual void dispose();
 
-protected:
+  protected:
     bool initGLFW();
     bool initImGui();
 };

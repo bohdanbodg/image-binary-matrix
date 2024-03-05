@@ -5,7 +5,7 @@ A small application to fetch an image mask based on a specified color range and 
 ## Requirements
 
 - C++17 compiler
-- [CMake](https://cmake.org/download) >= 3.15
+- [CMake](https://cmake.org/download) >= 3.15 (>= 23 for Ubuntu)
 - [Python](https://www.python.org/downloads) 3
 - [Conan](https://conan.io/downloads) 2
 
@@ -35,17 +35,34 @@ python3 ./scripts/build.py
 
 ### Run
 
-`make run` or `python ./scripts/run.py` or `python3 ./scripts/run.py`
+```
+make run
+```
 
-> P.S. Tested on MacOS and Windows, works perfect
+OR
+
+```
+python ./scripts/run.py
+```
+
+OR
+
+```
+python3 ./scripts/run.py
+```
+
+> P.S. Tested on MacOS 14, Windows 11 and Ubuntu 22.
 
 ## Technologies
 
-- C++17
-- GLEW
-- GLFW
-- ImGui
-- OpenCV
+- [C++17](https://isocpp.org)
+- [GLEW](https://glew.sourceforge.net)
+- [GLFW](https://www.glfw.org)
+- [ImGui](https://github.com/ocornut/imgui)
+- [OpenCV](https://opencv.org)
+- [CMake](https://cmake.org)
+- [Python](https://www.python.org)
+- [Conan](https://conan.io)
 
 ## Screenshots
 

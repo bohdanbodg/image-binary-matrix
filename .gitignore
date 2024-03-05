@@ -4,5 +4,4 @@ build/
 CMakeUserPresets.json
 scripts/__pycache__/
 libs/
-.vscode/
 imgui.ini

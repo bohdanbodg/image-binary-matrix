@@ -1,0 +1,61 @@
+---
+# options: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+Language: Cpp
+Standard: c++17
+SortIncludes: false
+ColumnLimit: 80
+UseTab: Never
+TabWidth: 4
+IndentWidth: 4
+LineEnding: LF
+PointerAlignment: Right
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterNamespace: true
+    AfterClass: true
+    AfterStruct: true
+    AfterEnum: true
+    AfterUnion: true
+    AfterFunction: false
+    AfterCaseLabel: false
+    AfterExternBlock: false
+    AfterControlStatement: Never
+    BeforeCatch: false
+    BeforeElse: false
+    BeforeWhile: false
+    BeforeLambdaBody: false
+    SplitEmptyNamespace: true
+    SplitEmptyRecord: true
+    SplitEmptyFunction: true
+BinPackArguments: false
+BinPackParameters: false
+AlignOperands: Align
+BreakArrays: false
+BreakBeforeBinaryOperators: All
+BreakAfterReturnType: Automatic
+BreakTemplateDeclarations: Yes
+AlignAfterOpenBracket: BlockIndent
+AllowShortIfStatementsOnASingleLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowAllArgumentsOnNextLine: false
+InsertTrailingCommas: None
+EmptyLineBeforeAccessModifier: LogicalBlock
+IndentAccessModifiers: false
+AccessModifierOffset: -2
+AlignArrayOfStructures: Right
+SpacesInContainerLiterals: false
+SpacesInSquareBrackets: false
+AllowShortFunctionsOnASingleLine: None
+BreakBeforeTernaryOperators: true
+PackConstructorInitializers: NextLine
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeInheritanceColon: false
+SpaceBeforeParens: ControlStatementsExceptControlMacros
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+AlignEscapedNewlines: DontAlign
+---

@@ -7,7 +7,8 @@ static void glfw_error_callback(int error, const char *description) {
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
-Application::Application(const char *windowName) : windowName(windowName), inited(false) {
+Application::Application(const char *windowName)
+    : windowName(windowName), windowWidth(0), windowHeight(0), inited(false) {
 }
 
 Application::~Application() {
@@ -44,16 +45,28 @@ void Application::run() {
         ImGui::Render();
 
         const auto &clear_color = this->clearColor;
-        int display_w, display_h;
-        glfwGetFramebufferSize(this->window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glfwGetFramebufferSize(
+            this->window,
+            &this->windowWidth,
+            &this->windowHeight
+        );
+        glViewport(0, 0, this->windowWidth, this->windowHeight);
+        glClearColor(
+            clear_color.x * clear_color.w,
+            clear_color.y * clear_color.w,
+            clear_color.z * clear_color.w,
+            clear_color.w
+        );
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(this->window);
     }
+}
+
+void Application::terminate() {
+    glfwSetWindowShouldClose(this->window, GLFW_TRUE);
 }
 
 void Application::draw() {
@@ -102,7 +115,8 @@ bool Application::initGLFW() {
 #endif
 
     // Create window with graphics context
-    this->window = glfwCreateWindow(800, 600, this->windowName, nullptr, nullptr);
+    this->window
+        = glfwCreateWindow(800, 600, this->windowName, nullptr, nullptr);
     if (this->window == nullptr) {
         return false;
     }
@@ -117,12 +131,16 @@ bool Application::initImGui() {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
+    io.ConfigFlags
+        |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+    io.ConfigFlags
+        |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
 
-    return ImGui_ImplGlfw_InitForOpenGL(this->window, true) && ImGui_ImplOpenGL3_Init(this->glslVersion);
+    return ImGui_ImplGlfw_InitForOpenGL(this->window, true)
+           && ImGui_ImplOpenGL3_Init(this->glslVersion);
 }
